@@ -1,0 +1,3 @@
+name: ShadowRunes
+version: '${project.version}'
+main: me.bluedyaishela.shadowrunes.ShadowRunes
