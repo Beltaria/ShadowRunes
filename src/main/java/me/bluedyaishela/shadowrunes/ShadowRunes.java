@@ -11,9 +11,9 @@ public final class ShadowRunes extends JavaPlugin {
     public File cfile;
 
     @Override
-    public void onEnable() {
-        // Plugin startup logic
-        // Création du fichier de configuration
+    public void onEnable()
+    {
+
         this.cfile = new File(getDataFolder(), "config.yml");
         if (!this.cfile.exists())
         {
@@ -24,24 +24,23 @@ public final class ShadowRunes extends JavaPlugin {
         }
         this.config = this.getConfig();
 
-        // Récupère l'ensemble des commandes
         this.useCommands();
+        ItemManager.init();
 
-//        ItemManager.init();
+
 //        this.getServer().getPluginManager().registerEvents(new Damage(this), this);
 
-        // Message de lancement
         System.out.println("ShadowRunes a démarré avec succès.");
     }
 
     public void useCommands()
     {
-        getCommand("shadowrunes").setExecutor(new Commands());
+        this.getCommand("shadowrunes").setExecutor(new Commands());
     }
 
     @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+    public void onDisable()
+    {
         System.out.println("ShadowRunes s'est arrêté avec succès.");
     }
 }
