@@ -7,24 +7,13 @@ import org.bukkit.entity.Player;
 
 public class Commands implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (commandSender instanceof Player) {
-            Player player = (Player) commandSender;
-            if (player.hasPermission("op"))
-            {
-//                if (command.getName().equalsIgnoreCase("givedamagesword")) {
-//                    player.getWorld().dropItemNaturally(player.getLocation(), ItemManager.DamageSword);
-//                }
-            }
-            else
-            {
-                commandSender.sendMessage("You are not allowed to use this command.");
-            }
-            return true;
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        if(sender instanceof Player)
+        {
+            Player player = (Player)sender;
+            player.sendMessage("§cCommande réussie.");
         }
-        else {
-            commandSender.sendMessage("Only players can use that command.");
-            return true;
-        }
+        return false;
     }
 }

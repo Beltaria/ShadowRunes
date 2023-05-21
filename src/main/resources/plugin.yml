@@ -1,3 +1,7 @@
 name: ShadowRunes
 version: '${project.version}'
 main: me.bluedyaishela.shadowrunes.ShadowRunes
+commands:
+  shadowrunes:
+    description: Vous utilisez Shadow Runes en version ${project.version}
+    permission: shadowrunes.use

@@ -1,7 +1,5 @@
 package me.bluedyaishela.shadowrunes;
 
-import com.sun.org.apache.bcel.internal.generic.DMUL;
-import me.bluedyaishela.shadowrunes.runes.Damage;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,6 +13,7 @@ public final class ShadowRunes extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        // Création du fichier de configuration
         this.cfile = new File(getDataFolder(), "config.yml");
         if (!this.cfile.exists())
         {
@@ -25,14 +24,24 @@ public final class ShadowRunes extends JavaPlugin {
         }
         this.config = this.getConfig();
 
+        // Récupère l'ensemble des commandes
+        this.useCommands();
+
+//        ItemManager.init();
 //        this.getServer().getPluginManager().registerEvents(new Damage(this), this);
 
-        System.out.println("FoodEffect a démarré avec succès.");
+        // Message de lancement
+        System.out.println("ShadowRunes a démarré avec succès.");
+    }
+
+    public void useCommands()
+    {
+        getCommand("shadowrunes").setExecutor(new Commands());
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        System.out.println("FoodEffect s'est arrêté avec succès.");
+        System.out.println("ShadowRunes s'est arrêté avec succès.");
     }
 }
