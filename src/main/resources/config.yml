@@ -1,0 +1,11 @@
+plugin_name: "ShadowRunes"
+runes:
+  damage:
+    lore: "§7Damage: §c+70"
+    max-multiplier: ""
+  vitesse:
+    lore: ""
+    max-multiplier: ""
+undeadsword:
+  zombie: 100
+  skeleton: 100
