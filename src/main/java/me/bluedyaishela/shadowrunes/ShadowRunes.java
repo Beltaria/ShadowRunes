@@ -1,5 +1,6 @@
 package me.bluedyaishela.shadowrunes;
 
+import me.bluedyaishela.shadowrunes.runes.Damage;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,14 +29,14 @@ public final class ShadowRunes extends JavaPlugin {
         ItemManager.init();
 
 
-//        this.getServer().getPluginManager().registerEvents(new Damage(this), this);
+        this.getServer().getPluginManager().registerEvents(new Damage(this), this);
 
         System.out.println("ShadowRunes a démarré avec succès.");
     }
 
     public void useCommands()
     {
-        this.getCommand("shadowrunes").setExecutor(new Commands());
+        this.getCommand("shadowrunes").setExecutor(new Commands(this));
     }
 
     @Override
