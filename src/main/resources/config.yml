@@ -1,11 +1,10 @@
 plugin_name: "ShadowRunes"
+plugin_commands: "§7[§bShadowRunes§7] §r» "
+# Toutes les valeurs sont en "%".
 runes:
   damage:
-    lore: "§7Damage: §c+70"
-    max-multiplier: ""
+    lore: "§r» Bonus de dégâts : "
+    max-multiplier: 20
   vitesse:
-    lore: ""
-    max-multiplier: ""
-undeadsword:
-  zombie: 100
-  skeleton: 100
+    lore: "§r» Bonus de vitesse : "
+    max-multiplier: 10
