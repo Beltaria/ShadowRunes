@@ -13,4 +13,4 @@ Le tout est configurable dans les fichiers de [configuration](https://github.com
 
 - shadowrunes help - Affiche le menu d'aide des commandes
 - shadowrunes damagesword - Donne une arme avec augmentation de dégâts
-- shadowrunes damagerune - Donne une orbe d'augmentation de dégâts
+- shadowrunes damagerune - Donne un orbe d'augmentation de dégâts
