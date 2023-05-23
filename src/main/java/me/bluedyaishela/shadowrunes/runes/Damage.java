@@ -63,7 +63,8 @@ public class Damage implements Listener {
 
         // On récupère maintenant la meta de la rune et on vérifie qu'il s'agisse bien d'une rune
         ItemMeta metaRune = rune.getItemMeta();
-        if (!integerValue.searchStringInLore(metaRune.getLore(), config.getString("runes.damage.lore")) || metaRune.getLore() == null) // A modifier !metaRune.getLore().contains("damage")
+        boolean stringInLore = integerValue.searchStringInLore(metaRune.getLore(), config.getString("runes.damage.lore"));
+        if (!stringInLore || metaRune.getLore() == null) // A modifier !metaRune.getLore().contains("damage")
         {
             return;
         }
@@ -71,6 +72,13 @@ public class Damage implements Listener {
 
         // Récupération de la valeur de la rune :
         int runeValue = integerValue.getIntegerOfLoreRune(metaRune.getLore().toString());
+        int maxMultiplier = config.getInt("runes.damage.max-multiplier");
+
+        if (runeValue > maxMultiplier)
+        {
+            player.sendMessage(config.getString("plugin_commands") + "Cette rune n'est pas valide. Merci de contacter un administrateur");
+            return;
+        }
 
         // On récupère la meta de l'arme et on conserve l'ensemble de ses lore :
         ItemMeta metaArme = arme.getItemMeta();
@@ -91,6 +99,12 @@ public class Damage implements Listener {
                         // On récupère la ligne du lore avec la valeur assignée et on ajoute la nouvelle en supplément
                         int armeDamage = integerValue.getIntegerOfLoreRune(ancienLore.get(index));
                         int newDamage = armeDamage + runeValue;
+
+                        // Vérifie la valeur totale
+                        if (maxMultiplier < newDamage) {
+                            player.sendMessage(config.getString("plugin_commands") + "Augmentation de dégâts limitée à §c" + maxMultiplier + "%");
+                            return;
+                        }
 
                         ancienLore.set(index, config.getString("runes.damage.lore") + "§c+" + newDamage + "%");
                         metaArme.setLore(ancienLore);
@@ -123,7 +137,7 @@ public class Damage implements Listener {
             player.setItemOnCursor(null);
         }
 
-        player.sendMessage("Votre rune a été appliquée avec succès !");
+        player.sendMessage(config.getString("plugin_commands") + "Votre rune a été appliquée avec §asuccès §r!");
 
 
 
