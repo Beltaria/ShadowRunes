@@ -168,9 +168,9 @@ public class Damage implements Listener {
                     if (line.contains(config.getString("runes.damage.lore"))) {
 
                         int damageWeapon = integerValue.getIntegerOfLoreRune(line);
-                        double percentageDamage = event.getDamage() * 1 + (damageWeapon/event.getDamage());
+                        double percentageDamage = event.getDamage() + (event.getDamage() * damageWeapon / 100 );
 
-                        player.sendMessage(event.getDamager().toString());
+                        player.sendMessage(String.valueOf(event.getDamage()));
                         player.sendMessage(String.valueOf(percentageDamage));
 
                         event.setDamage(percentageDamage);
