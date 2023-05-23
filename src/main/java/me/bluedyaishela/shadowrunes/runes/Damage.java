@@ -158,7 +158,10 @@ public class Damage implements Listener {
         Player player = (Player) event.getDamager();
         ItemStack weapon = player.getItemInHand();
 
-        if (weapon != null && weapon.getType() == Material.DIAMOND_SWORD) {
+        // Condition si "arme" est bien une arme
+        Weapons weapons = new Weapons();
+
+        if (weapon != null && weapons.getWeapons().contains(weapon.getType())) {
             ItemMeta itemMeta = weapon.getItemMeta();
 
             if (itemMeta != null && itemMeta.hasLore()) {
