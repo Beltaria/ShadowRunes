@@ -31,15 +31,19 @@ public class Commands implements CommandExecutor {
                 if (argument.equals("damagesword"))
                 {
                     player.getInventory().addItem(ItemManager.DamageSword);
-                    player.sendMessage(config.getString("plugin_commands") + "§cVous avez obtenue l'arme de dégâts.");
+                    player.sendMessage(config.getString("plugin_commands") + "§cVous avez obtenu l'arme de dégâts.");
                 }
                 else if (argument.equals("damagerune"))
                 {
                     player.getInventory().addItem(ItemManager.DamageRunes);
-                    player.sendMessage(config.getString("plugin_commands") + "§cCommande réussie.");
+                    player.sendMessage(config.getString("plugin_commands") + "§cVous avez obtenu la rune de dégâts.");
+                }
+                else if (argument.equals("reload"))
+                {
+                    player.sendMessage("§c"+config.getString("plugin_name")+" a été rechargé avec succès !");
+                    // Code permettant de recharger le plugin à faire
                 }
             }
-            player.sendMessage(config.getString("plugin_commands") + "§cCommande réussie.");
         }
         return false;
     }
