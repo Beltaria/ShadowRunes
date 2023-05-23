@@ -150,7 +150,6 @@ public class Damage implements Listener {
             return;
         }
 
-        // Fichier de configuration
         FileConfiguration config = main.getConfig();
 
         IntegerValue integerValue = new IntegerValue();
@@ -158,7 +157,6 @@ public class Damage implements Listener {
         Player player = (Player) event.getDamager();
         ItemStack weapon = player.getItemInHand();
 
-        // Condition si "arme" est bien une arme
         Weapons weapons = new Weapons();
 
         if (weapon != null && weapons.getWeapons().contains(weapon.getType())) {
@@ -172,9 +170,6 @@ public class Damage implements Listener {
 
                         int damageWeapon = integerValue.getIntegerOfLoreRune(line);
                         double percentageDamage = event.getDamage() + (event.getDamage() * damageWeapon / 100 );
-
-                        player.sendMessage(String.valueOf(event.getDamage()));
-                        player.sendMessage(String.valueOf(percentageDamage));
 
                         event.setDamage(percentageDamage);
                         break;
