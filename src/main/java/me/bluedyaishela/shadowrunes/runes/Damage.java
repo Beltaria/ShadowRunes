@@ -8,11 +8,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Damage implements Listener {
 
@@ -143,9 +145,40 @@ public class Damage implements Listener {
 
     }
     @EventHandler
-    public void onDamage()
-    {
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager() instanceof Player)) {
+            return;
+        }
 
+        // Fichier de configuration
+        FileConfiguration config = main.getConfig();
+
+        IntegerValue integerValue = new IntegerValue();
+
+        Player player = (Player) event.getDamager();
+        ItemStack weapon = player.getItemInHand();
+
+        if (weapon != null && weapon.getType() == Material.DIAMOND_SWORD) {
+            ItemMeta itemMeta = weapon.getItemMeta();
+
+            if (itemMeta != null && itemMeta.hasLore()) {
+                List<String> lore = itemMeta.getLore();
+
+                for (String line : lore) {
+                    if (line.contains(config.getString("runes.damage.lore"))) {
+
+                        int damageWeapon = integerValue.getIntegerOfLoreRune(line);
+                        double percentageDamage = event.getDamage() * 1 + (damageWeapon/event.getDamage());
+
+                        player.sendMessage(event.getDamager().toString());
+                        player.sendMessage(String.valueOf(percentageDamage));
+
+                        event.setDamage(percentageDamage);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
 
