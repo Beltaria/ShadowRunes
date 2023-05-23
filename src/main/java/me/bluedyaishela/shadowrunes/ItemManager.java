@@ -27,8 +27,8 @@ public class ItemManager {
         meta.setDisplayName("§cHache de dégâts");
 
         List<String> lore = new ArrayList<>();
-        lore.add("§f» Bonus de dégâts : §c+50%");
-        lore.add("§f» §cObjet Opérateur");
+        lore.add("§r» Bonus de dégâts : §c+50%");
+        lore.add("§r» §cObjet Opérateur");
         meta.setLore(lore);
 
         meta.addEnchant(Enchantment.DAMAGE_ALL, 10, true);
@@ -43,8 +43,8 @@ public class ItemManager {
         meta.setDisplayName("§5Altaïr Céleste");
 
         List<String> lore = new ArrayList<>();
-        lore.add("§f» Bonus de dégâts : §c+5%");
-        lore.add("§f» §cObjet Opérateur");
+        lore.add("§r» Bonus de dégâts : §c+5%");
+        lore.add("§r» §cObjet Opérateur");
         meta.setLore(lore);
 
         item.setItemMeta(meta);

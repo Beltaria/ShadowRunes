@@ -2,12 +2,12 @@ package me.bluedyaishela.shadowrunes;
 
 import me.bluedyaishela.shadowrunes.runes.Damage;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
 public final class ShadowRunes extends JavaPlugin {
-
     public FileConfiguration config;
     public File cfile;
 

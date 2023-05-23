@@ -1,20 +1,18 @@
 package me.bluedyaishela.shadowrunes.runes;
 
-import me.bluedyaishela.shadowrunes.ItemManager;
 import me.bluedyaishela.shadowrunes.ShadowRunes;
+import me.bluedyaishela.shadowrunes.utils.IntegerValue;
+import me.bluedyaishela.shadowrunes.utils.Weapons;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 
 public class Damage implements Listener {
 
@@ -33,99 +31,101 @@ public class Damage implements Listener {
         {
             return;
         }
+        // Fichier de configuration
+        FileConfiguration config = main.getConfig();
+
+        // Instancie mes Classes
+        Weapons weapons = new Weapons();
+        IntegerValue integerValue = new IntegerValue();
 
         // On récupère le joueur qui a cliqué et l'objet actuellement sélectionné
         Player player = (Player) event.getWhoClicked();
-        ItemStack clickedItem = event.getCurrentItem(); // La hache en diamant
+        ItemStack arme = event.getCurrentItem();
 
-        if (clickedItem != null && clickedItem.getType() == Material.DIAMOND_AXE)
+        // Condition si "arme" est null
+        if (arme == null)
         {
-            ItemMeta clickedMeta = clickedItem.getItemMeta(); // Meta de la hache en diamant
-            ItemStack selectedItem = player.getItemOnCursor(); // Etoile du nether
-            if (selectedItem != null && selectedItem.getType() == Material.NETHER_STAR)
-            {
-                ItemMeta selectedItemMeta = selectedItem.getItemMeta(); // Meta de l'étoile du nether
-                if (selectedItemMeta.getLore() != null && selectedItemMeta.getLore().contains("damage"))
-                {
-                    event.setCancelled(true);
-                    player.sendMessage("Rune appliquée avec succès !");
-                    clickedMeta.setLore(Collections.singletonList("bonus damage"));
-                    clickedItem.setItemMeta(clickedMeta);
+            return;
+        }
 
-                    // Permet de supprimer l'étoile du nether
-                    if (selectedItem.getAmount() > 1) {
-                        selectedItem.setAmount(selectedItem.getAmount() - 1);
-                    } else {
-                        // Faire le code qui permet de supprimer l'étoile lorsqu'il n'y en a qu'une
-                        player.sendMessage(String.valueOf(selectedItem.getAmount()));
-                    }
-                }
-            }
+        // Condition si "arme" est bien une arme
+        if (!weapons.getWeapons().contains(arme.getType()))
+        {
+            return;
+        }
+
+        // On récupère la rune et on vérifie qu'il s'agisse bien d'une étoile du nether
+        ItemStack rune = player.getItemOnCursor();
+        if (rune.getType() != Material.NETHER_STAR )
+        {
+            return;
+        }
+
+        // On récupère maintenant la meta de la rune et on vérifie qu'il s'agisse bien d'une rune
+        ItemMeta metaRune = rune.getItemMeta();
+        if (!integerValue.searchStringInLore(metaRune.getLore(), config.getString("runes.damage.lore")) || metaRune.getLore() == null) // A modifier !metaRune.getLore().contains("damage")
+        {
+            return;
         }
 
 
+        // Récupération de la valeur de la rune :
+        int runeValue = integerValue.getIntegerOfLoreRune(metaRune.getLore().toString());
+
+        // On récupère la meta de l'arme et on conserve l'ensemble de ses lore :
+        ItemMeta metaArme = arme.getItemMeta();
 
 
-//        player.sendMessage("1");
-//        if (clickedItem != null && clickedItem.getType() == Material.DIAMOND_AXE)
-//        {
-//            player.sendMessage("2");
-//            ItemMeta clickedMeta = clickedItem.getItemMeta(); // Le meta de la hache en diamant
-////            if (clickedMeta != null && clickedMeta.getLore() != null && clickedMeta.getLore().contains("damage"))
-////            {
-////                player.sendMessage("3");
-//                ItemStack selectedItem = player.getItemOnCursor();
-//                if (selectedItem != null && selectedItem.getType() == Material.NETHER_STAR)
-//                {
-//                    player.sendMessage("4");
-//                    ItemMeta selectedMeta = selectedItem.getItemMeta();
-//                    if (selectedMeta != null) {
-//                        clickedMeta.setLore(Collections.singletonList("bonus damage"));
-//                        selectedItem.setItemMeta(selectedMeta);
-//                        player.sendMessage("5");
-//                        if (clickedItem.getAmount() > 1) {
-//                            clickedItem.setAmount(clickedItem.getAmount() - 1);
-//                        } else {
-//                            clickedItem.setAmount(0);
-////                            player.getInventory().remove(clickedItem);
-//                        }
-//                    }
-//                }
-////            }
-//        }
+        // Je vérifie si l'arme possède un lore :
+        if (metaArme.hasLore())
+        {
+            ArrayList<String> ancienLore = new ArrayList<>(metaArme.getLore());
+
+            // On vérifie si l'arme possède le lore souhaité ou non
+            if (integerValue.searchStringInLore(metaArme.getLore(), config.getString("runes.damage.lore"))) {
+                int index = 0;
+                for (String lineLore : ancienLore)
+                {
+                    if (integerValue.searchStringinString(lineLore, config.getString("runes.damage.lore")))
+                    {
+                        // On récupère la ligne du lore avec la valeur assignée et on ajoute la nouvelle en supplément
+                        int armeDamage = integerValue.getIntegerOfLoreRune(ancienLore.get(index));
+                        int newDamage = armeDamage + runeValue;
+
+                        ancienLore.set(index, config.getString("runes.damage.lore") + "§c+" + newDamage + "%");
+                        metaArme.setLore(ancienLore);
+                        arme.setItemMeta(metaArme);
+                        break; // Sort de la boucle lorsque la valeur est trouvée
+                    }
+                    index++;
+                }
+            }
+            else
+            {
+                ancienLore.add(config.getString("runes.damage.lore") + "§c+" + runeValue + "%");
+                metaArme.setLore(ancienLore);
+                arme.setItemMeta(metaArme);
+            }
+        }
+        else // Si l'arme n'a pas de lore
+        {
+            ArrayList<String> createLore = new ArrayList<>();
+            createLore.add(config.getString("runes.damage.lore") + "§c+" + runeValue + "%");
+            metaArme.setLore(createLore);
+            arme.setItemMeta(metaArme);
+        }
+
+        event.setCancelled(true);
+
+        if (rune.getAmount() > 1) {
+            rune.setAmount(rune.getAmount() - 1);
+        } else {
+            player.setItemOnCursor(null);
+        }
+
+        player.sendMessage("Votre rune a été appliquée avec succès !");
 
 
-
-
-//        player.sendMessage("Stade 1 : " + clickedItem);
-//        // On vérifie que l'item est bien une étoile du nether
-//        if (clickedItem != null && clickedItem.getType() == Material.NETHER_STAR)
-//        {
-//            // On vérifie ensuite que le lore est valide
-//            ItemMeta itemMeta = clickedItem.getItemMeta();
-//            player.sendMessage("Stade 2 : " + itemMeta);
-//            if (itemMeta != null && itemMeta.getLore() != null && itemMeta.getLore().contains("damage"))
-//            {
-//                // On récupère ensuite l'objet dans l'inventaire au dépôt de l'étoile et on vérifie que ce n'est pas vide.
-//                ItemStack weapon = player.getItemOnCursor();
-//                player.sendMessage("Stade 3 : " + weapon);
-//                if (weapon != null && weapon.getType() == Material.DIAMOND_AXE)
-//                {
-//                    ItemMeta weaponMeta = weapon.getItemMeta();
-//                    player.sendMessage("Stade 4 : " + weaponMeta);
-//                    if (weaponMeta != null) {
-//                        weaponMeta.setLore(Collections.singletonList("bonus damage"));
-//                        weapon.setItemMeta(weaponMeta);
-//                        if (clickedItem.getAmount() > 1) {
-//                            clickedItem.setAmount(clickedItem.getAmount() - 1);
-//                        } else {
-//                            clickedItem.setAmount(0);
-////                            player.getInventory().remove(clickedItem);
-//                        }
-//                    }
-//                }
-//            }
-//        }
 
     }
     @EventHandler
