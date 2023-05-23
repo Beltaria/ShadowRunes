@@ -13,10 +13,12 @@ public class ItemManager {
 
     public static ItemStack DamageSword;
     public static ItemStack DamageRunes;
+    public static ItemStack HighRune;
 
     public static void init() {
         createDamageSword();
         createDamageRunes();
+        createHighRune();
     }
 
     private static void createDamageSword() {
@@ -49,5 +51,21 @@ public class ItemManager {
 
         item.setItemMeta(meta);
         DamageRunes = item;
+    }
+
+    private static void createHighRune() {
+        // Crée une rune pouvant être ajoutée sur une épée
+        ItemStack item = new ItemStack(Material.NETHER_STAR);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName("§5Altaïr Céleste");
+
+        List<String> lore = new ArrayList<>();
+        lore.add("§r» Bonus de dégâts : §c+200%");
+        lore.add("§r» §cObjet Opérateur");
+        meta.setLore(lore);
+
+        item.setItemMeta(meta);
+        HighRune = item;
     }
 }

@@ -38,6 +38,11 @@ public class Commands implements CommandExecutor {
                     player.getInventory().addItem(ItemManager.DamageRunes);
                     player.sendMessage(config.getString("plugin_commands") + "§cVous avez obtenu la rune de dégâts.");
                 }
+                else if (argument.equals("highrune"))
+                {
+                    player.getInventory().addItem(ItemManager.HighRune);
+                    player.sendMessage(config.getString("plugin_commands") + "§cVous avez obtenu la rune de dégâts.");
+                }
                 else if (argument.equals("reload"))
                 {
                     player.sendMessage("§c"+config.getString("plugin_name")+" a été rechargé avec succès !");
