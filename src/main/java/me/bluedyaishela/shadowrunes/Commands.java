@@ -3,10 +3,15 @@ package me.bluedyaishela.shadowrunes;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-public class Commands implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Commands implements CommandExecutor, TabCompleter {
 
     private final ShadowRunes main;
     public Commands(ShadowRunes plugin) {
@@ -51,5 +56,40 @@ public class Commands implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+
+        List<String> availableCommands = new ArrayList<>();
+
+        if(args.length == 1)
+        {
+            availableCommands.addAll(Arrays.asList("help", "damagesword", "damagerune", "highrune", "reload"));
+            return this.getArgsComplete(args, availableCommands, 0);
+        }
+
+//        switch (args.length) {
+//            case 1:
+//                availableCommands.addAll(Arrays.asList("help", "add", "addall", "leaderboard", "show"));
+//                return this.getArgsComplete(args, availableCommands, 0);
+//            case 2:
+//                availableCommands.addAll(Arrays.asList("value", "player"));
+//                return this.getArgsComplete(args, availableCommands, 1);
+//        }
+        return null;
+    }
+
+    public List<String> getArgsComplete(String[] args, List<String> availableCommands, int argsIndex) {
+        List<String> completions = new ArrayList<>();
+        String input = args[argsIndex].toLowerCase();
+
+        for (String commandOption : availableCommands) {
+            if (commandOption.startsWith(input)) {
+                completions.add(commandOption);
+            }
+        }
+
+        return completions;
     }
 }

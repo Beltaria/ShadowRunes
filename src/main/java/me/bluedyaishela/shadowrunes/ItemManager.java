@@ -21,6 +21,11 @@ public class ItemManager {
         createHighRune();
     }
 
+    public void getDamageRune()
+    {
+
+    }
+
     private static void createDamageSword() {
         // Crée l'épée qui possède des dégâts supplémentaires (lore)
         ItemStack item = new ItemStack(Material.DIAMOND_AXE);
