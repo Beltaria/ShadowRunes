@@ -2,7 +2,7 @@ package me.bluedyaishela.shadowrunes.runes;
 
 import me.bluedyaishela.shadowrunes.ShadowRunes;
 import me.bluedyaishela.shadowrunes.utils.Armors;
-import me.bluedyaishela.shadowrunes.utils.Players;
+import me.bluedyaishela.shadowrunes.utils.UtilsPlayer;
 import me.bluedyaishela.shadowrunes.utils.UtilsValue;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,12 +11,11 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Speed implements Listener {
     private final ShadowRunes main;
-    private final Players players = new Players();
+    private final UtilsPlayer players = new UtilsPlayer();
     private final UtilsValue utilsValue = new UtilsValue();
     public Speed(ShadowRunes plugin)
     {
