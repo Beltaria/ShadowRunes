@@ -4,21 +4,24 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ItemManager {
 
     public static ItemStack DamageSword;
     public static ItemStack DamageRunes;
     public static ItemStack HighRune;
+    public static ItemStack RandomRuneSpeed;
 
     public static void init() {
         createDamageSword();
         createDamageRunes();
         createHighRune();
+        createRandomRuneSpeed();
     }
 
     public void getDamageRune()
@@ -72,5 +75,25 @@ public class ItemManager {
 
         item.setItemMeta(meta);
         HighRune = item;
+    }
+
+    private static void createRandomRuneSpeed()
+    {
+        Random random = new Random();
+        float minValue = 0.00f;
+        float maxValue = 10.00f;
+        float randomValue = minValue + random.nextFloat() * (maxValue - minValue);
+        float roundedValue = Math.round(randomValue * 100) / 100f;
+
+        ItemStack itemStack = new ItemStack(Material.FIREWORK_CHARGE);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        itemMeta.setDisplayName("§bRune de vitesse");
+        List<String> lore = new ArrayList<>();
+        lore.add("§aSpeed " + roundedValue + "%");
+        itemMeta.setLore(lore);
+
+        itemStack.setItemMeta(itemMeta);
+        RandomRuneSpeed = itemStack;
     }
 }

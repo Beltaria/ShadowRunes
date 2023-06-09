@@ -53,6 +53,11 @@ public class Commands implements CommandExecutor, TabCompleter {
                     player.sendMessage("§c"+config.getString("plugin_name")+" a été rechargé avec succès !");
                     // Code permettant de recharger le plugin à faire
                 }
+                else if (argument.equals("speedrune"))
+                {
+                    player.getInventory().addItem(ItemManager.RandomRuneSpeed);
+                    player.sendMessage(config.getString("plugin_commands") + "§cVous avez obtenu une rune de vitesse aléatoire.");
+                }
             }
         }
         return false;
