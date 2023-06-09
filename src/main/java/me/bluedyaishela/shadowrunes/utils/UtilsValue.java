@@ -1,13 +1,10 @@
 package me.bluedyaishela.shadowrunes.utils;
 
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class IntegerValue {
+public class UtilsValue {
 
     public boolean searchStringInLore(List<String> lore, String searchedValue)
     {
@@ -43,6 +40,26 @@ public class IntegerValue {
         } else {
             return 0;
         }
+    }
+
+    public Float getFloatOfLoreRune(String lore)
+    {
+        String motif = "\\d+";
+        Pattern pattern = Pattern.compile(motif);
+        Matcher matcher = pattern.matcher(lore);
+
+        if (matcher.find()) {
+            String resultat = matcher.group();
+            Float entier = (float) Integer.parseInt(resultat);
+            return entier;
+        } else {
+            return 0F;
+        }
+    }
+
+    public float getFloatFromPercentage(Float initialValue, Float percentage)
+    {
+        return initialValue + (initialValue * percentage / 100);
     }
 
 }

@@ -1,7 +1,7 @@
 package me.bluedyaishela.shadowrunes.runes;
 
 import me.bluedyaishela.shadowrunes.ShadowRunes;
-import me.bluedyaishela.shadowrunes.utils.IntegerValue;
+import me.bluedyaishela.shadowrunes.utils.UtilsValue;
 import me.bluedyaishela.shadowrunes.utils.Weapons;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -38,7 +38,7 @@ public class Damage implements Listener {
 
         // Instancie mes Classes
         Weapons weapons = new Weapons();
-        IntegerValue integerValue = new IntegerValue();
+        UtilsValue integerValue = new UtilsValue();
 
         // On récupère le joueur qui a cliqué et l'objet actuellement sélectionné
         Player player = (Player) event.getWhoClicked();
@@ -152,7 +152,7 @@ public class Damage implements Listener {
 
         FileConfiguration config = main.getConfig();
 
-        IntegerValue integerValue = new IntegerValue();
+        UtilsValue integerValue = new UtilsValue();
 
         Player player = (Player) event.getDamager();
         ItemStack weapon = player.getItemInHand();
