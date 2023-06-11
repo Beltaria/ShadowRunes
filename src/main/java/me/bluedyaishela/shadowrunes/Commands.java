@@ -1,6 +1,7 @@
 package me.bluedyaishela.shadowrunes;
 
 import me.bluedyaishela.shadowrunes.commands.CommandFunctionManager;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -56,8 +57,31 @@ public class Commands implements CommandExecutor, TabCompleter {
 
         if(args.length == 1)
         {
-            availableCommands.addAll(Arrays.asList("help", "damagesword", "damagerune", "highrune", "reload"));
+            availableCommands.addAll(Arrays.asList("help", "reload", "give"));
             return this.getArgsComplete(args, availableCommands, 0);
+        }
+
+        Player[] players = Bukkit.getOnlinePlayers().toArray(new Player[0]);
+        List<String> playerNames = new ArrayList<>();
+
+        for (Player player : players) {
+            playerNames.add(player.getName());
+        }
+
+        switch (args[0])
+        {
+            case "help":
+                availableCommands.addAll(Arrays.asList("1", "2", "3"));
+                return this.getArgsComplete(args, availableCommands, 1);
+            case "give":
+                if (args.length == 2)
+                {
+                    availableCommands.addAll(playerNames);
+                    return this.getArgsComplete(args, availableCommands, 1);
+                } else if (args.length == 3) {
+                    availableCommands.addAll(Arrays.asList("damagesword", "damagesword"));
+                    return this.getArgsComplete(args, availableCommands, 2);
+                }
         }
 
 //        switch (args.length) {

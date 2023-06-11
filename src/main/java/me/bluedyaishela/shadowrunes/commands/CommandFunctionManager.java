@@ -44,6 +44,7 @@ public class CommandFunctionManager {
 
         String pseudo = args[1];
 
+        // Problème sur le pseudo à régler
         if (!utilsPlayer.isPlayerOnline(pseudo))
         {
             sender.sendMessage("Le joueur n'est pas connecté ou n'existe pas.");
