@@ -18,6 +18,10 @@ import java.util.List;
 
 public class Damage implements Listener {
 
+    /*
+        Revoir
+     */
+
     private final ShadowRunes main;
 
     public Damage(ShadowRunes plugin)

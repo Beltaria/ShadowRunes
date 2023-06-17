@@ -22,6 +22,10 @@ public class Speed implements Listener {
         this.main = plugin;
     }
 
+    /*
+        Fusion du code avec les autres runes appliquables à l'armure
+     */
+
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
