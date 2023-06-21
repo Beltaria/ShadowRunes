@@ -45,6 +45,8 @@ public class Commands implements CommandExecutor, TabCompleter {
                 return cmdFunctionManager.giveCommand(sender, args);
             case "help":
                 return cmdFunctionManager.helpCommand(sender, args);
+            case "create":
+                return cmdFunctionManager.generateCommand(sender);
         }
 
         return false;

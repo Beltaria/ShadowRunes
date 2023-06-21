@@ -1,10 +1,17 @@
 package me.bluedyaishela.shadowrunes.commands;
 
 import me.bluedyaishela.shadowrunes.ItemManager;
+import me.bluedyaishela.shadowrunes.RandomNumberGenerator;
 import me.bluedyaishela.shadowrunes.utils.UtilsPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandFunctionManager {
 
@@ -68,5 +75,29 @@ public class CommandFunctionManager {
 
         sender.sendMessage("L'objet recherché n'existe pas");
         return false;
+    }
+
+    public boolean generateCommand(CommandSender sender)
+    {
+        String senderName = sender.getName();
+        Player player = Bukkit.getPlayer(senderName);
+
+        /*
+            Génération de l'item
+         */
+
+        ItemStack itemStack = new ItemStack(Material.DOUBLE_PLANT);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        List<String> lore = new ArrayList<>();
+        lore.add("§aSpeed " + RandomNumberGenerator.getRandom() + "%");
+        itemMeta.setLore(lore);
+
+        itemStack.setItemMeta(itemMeta);
+
+        player.getInventory().addItem(itemStack);
+        player.sendMessage("§aOrbe obtenue avec succès !");
+
+        return true;
     }
 }
