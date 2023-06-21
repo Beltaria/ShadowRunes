@@ -1,11 +1,12 @@
 package me.bluedyaishela.shadowrunes.commands;
 
 import me.bluedyaishela.shadowrunes.ItemManager;
-import me.bluedyaishela.shadowrunes.RandomNumberGenerator;
+import me.bluedyaishela.shadowrunes.utils.RandomNumberGenerator;
 import me.bluedyaishela.shadowrunes.utils.UtilsPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -83,6 +84,23 @@ public class CommandFunctionManager {
         Player player = Bukkit.getPlayer(senderName);
 
         /*
+            Vérification des prérequis
+         */
+
+        ItemStack itemInHand = player.getItemInHand();
+
+        if (itemInHand == null) return false;
+
+        ItemMeta itemMetaInHand = itemInHand.getItemMeta();
+
+        if (!itemMetaInHand.hasEnchants()) return false;
+        if (!itemMetaInHand.hasEnchant(Enchantment.PROTECTION_ENVIRONMENTAL)) return false;
+
+        int protectionLevel = itemMetaInHand.getEnchantLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
+
+        if (protectionLevel != 4) return false;
+
+        /*
             Génération de l'item
          */
 
@@ -95,7 +113,8 @@ public class CommandFunctionManager {
 
         itemStack.setItemMeta(itemMeta);
 
-        player.getInventory().addItem(itemStack);
+//        player.getInventory().addItem(itemStack);
+        player.setItemInHand(itemStack);
         player.sendMessage("§aOrbe obtenue avec succès !");
 
         return true;

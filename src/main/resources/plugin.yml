@@ -5,3 +5,6 @@ commands:
   shadowrunes:
     description: Vous utilisez Shadow Runes en version ${project.version}
     permission: shadowrunes.use
+  sr:
+    description: Vous utilisez Shadow Runes en version ${project.version}
+    permission: shadowrunes.use

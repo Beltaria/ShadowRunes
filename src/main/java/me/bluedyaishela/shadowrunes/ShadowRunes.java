@@ -39,6 +39,7 @@ public final class ShadowRunes extends JavaPlugin {
     public void useCommands()
     {
         this.getCommand("shadowrunes").setExecutor(new Commands(this));
+        this.getCommand("sr").setExecutor(new Commands(this));
     }
 
     @Override

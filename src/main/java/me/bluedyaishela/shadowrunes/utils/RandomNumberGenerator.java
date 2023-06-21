@@ -1,4 +1,4 @@
-package me.bluedyaishela.shadowrunes;
+package me.bluedyaishela.shadowrunes.utils;
 
 import java.util.Random;
 
