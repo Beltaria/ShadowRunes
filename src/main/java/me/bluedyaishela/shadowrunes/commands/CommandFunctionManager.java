@@ -1,6 +1,7 @@
 package me.bluedyaishela.shadowrunes.commands;
 
 import me.bluedyaishela.shadowrunes.ItemManager;
+import me.bluedyaishela.shadowrunes.utils.Armors;
 import me.bluedyaishela.shadowrunes.utils.RandomNumberGenerator;
 import me.bluedyaishela.shadowrunes.utils.UtilsPlayer;
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CommandFunctionManager {
 
@@ -83,13 +85,17 @@ public class CommandFunctionManager {
         String senderName = sender.getName();
         Player player = Bukkit.getPlayer(senderName);
 
+        Armors armors = new Armors();
+
         /*
             Vérification des prérequis
          */
 
+        if (player.getItemInHand() == null) return false;
+
         ItemStack itemInHand = player.getItemInHand();
 
-        if (itemInHand == null) return false;
+        if (itemInHand == null || !armors.getArmors().contains(itemInHand.getType())) return false;
 
         ItemMeta itemMetaInHand = itemInHand.getItemMeta();
 
@@ -107,13 +113,38 @@ public class CommandFunctionManager {
         ItemStack itemStack = new ItemStack(Material.DOUBLE_PLANT);
         ItemMeta itemMeta = itemStack.getItemMeta();
 
-        List<String> lore = new ArrayList<>();
-        lore.add("§aSpeed " + RandomNumberGenerator.getRandom() + "%");
-        itemMeta.setLore(lore);
+        Random random = new Random();
 
+        int randomUn = random.nextInt(2);
+        int randomDeux = random.nextInt(2);
+        int randomTrois = random.nextInt(2);
+
+        System.out.println(randomUn + " " + randomDeux + " " + randomTrois);
+
+        List<String> lore = new ArrayList<>();
+
+        if (randomUn == 1) lore.add("§aSpeed " + RandomNumberGenerator.getRandom() + "%");
+        if (randomDeux == 1) lore.add("§aResistance " + RandomNumberGenerator.getRandom() + "%");
+        if (randomTrois == 1) lore.add("§aHealth " + RandomNumberGenerator.getRandom() + "%");
+
+        if (lore.size() == 0)
+        {
+            int randomSwitch = random.nextInt(3);
+
+            switch (randomSwitch) {
+                case 0: lore.add("§aSpeed " + RandomNumberGenerator.getRandom() + "%");
+                case 1: lore.add("§aResistance " + RandomNumberGenerator.getRandom() + "%");
+                case 2: lore.add("§aHealth " + RandomNumberGenerator.getRandom() + "%");
+            }
+        }
+
+        lore.add("");
+        lore.add("§eDépose cette rune sur ton armure pour l'améliorer !");
+
+        itemMeta.setLore(lore);
+        itemMeta.setDisplayName("§6Rune d'amélioration");
         itemStack.setItemMeta(itemMeta);
 
-//        player.getInventory().addItem(itemStack);
         player.setItemInHand(itemStack);
         player.sendMessage("§aOrbe obtenue avec succès !");
 
