@@ -119,22 +119,24 @@ public class CommandFunctionManager {
         int randomDeux = random.nextInt(2);
         int randomTrois = random.nextInt(2);
 
+        int randomHealth = RandomNumberGenerator.getRandomHealth();
+
         System.out.println(randomUn + " " + randomDeux + " " + randomTrois);
 
         List<String> lore = new ArrayList<>();
 
-        if (randomUn == 1) lore.add("§aSpeed " + RandomNumberGenerator.getRandom() + "%");
-        if (randomDeux == 1) lore.add("§aResistance " + RandomNumberGenerator.getRandom() + "%");
-        if (randomTrois == 1) lore.add("§aHealth " + RandomNumberGenerator.getRandom() + "%");
+        if (randomUn == 1) lore.add("§aSpeed " + RandomNumberGenerator.getRandomSpeed() + "%");
+        if (randomDeux == 1) lore.add("§aResistance " + RandomNumberGenerator.getRandomResistance() + "%");
+        if (randomTrois == 1 && randomHealth != 0) lore.add("§aHealth " + RandomNumberGenerator.getRandomHealth());
 
         if (lore.size() == 0)
         {
             int randomSwitch = random.nextInt(3);
 
             switch (randomSwitch) {
-                case 0: lore.add("§aSpeed " + RandomNumberGenerator.getRandom() + "%");
-                case 1: lore.add("§aResistance " + RandomNumberGenerator.getRandom() + "%");
-                case 2: lore.add("§aHealth " + RandomNumberGenerator.getRandom() + "%");
+                case 0: lore.add("§aSpeed " + RandomNumberGenerator.getRandomSpeed() + "%");
+                case 1: lore.add("§aResistance " + RandomNumberGenerator.getRandomResistance() + "%");
+                case 2: if (randomHealth != 0) lore.add("§aHealth " + RandomNumberGenerator.getRandomHealth() + "%");
             }
         }
 

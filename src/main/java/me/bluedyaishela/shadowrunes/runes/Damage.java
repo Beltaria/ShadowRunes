@@ -148,40 +148,4 @@ public class Damage implements Listener {
 
 
     }
-    @EventHandler
-    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player)) {
-            return;
-        }
-
-        FileConfiguration config = main.getConfig();
-
-        UtilsValue integerValue = new UtilsValue();
-
-        Player player = (Player) event.getDamager();
-        ItemStack weapon = player.getItemInHand();
-
-        Weapons weapons = new Weapons();
-
-        if (weapon != null && weapons.getWeapons().contains(weapon.getType())) {
-            ItemMeta itemMeta = weapon.getItemMeta();
-
-            if (itemMeta != null && itemMeta.hasLore()) {
-                List<String> lore = itemMeta.getLore();
-
-                for (String line : lore) {
-                    if (line.contains(config.getString("runes.damage.lore"))) {
-
-                        int damageWeapon = integerValue.getIntegerOfLoreRune(line);
-                        double percentageDamage = event.getDamage() + (event.getDamage() * damageWeapon / 100 );
-
-                        event.setDamage(percentageDamage);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-
 }

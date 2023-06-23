@@ -23,7 +23,7 @@ public class Speed implements Listener {
     }
 
     /*
-        Fusion du code avec les autres runes appliquables à l'armure
+        Fusion du code avec les autres runes applicable à l'armure
      */
 
     @EventHandler
